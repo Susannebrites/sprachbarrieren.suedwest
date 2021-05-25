@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Krankenhausbewertung im Bezirk Steglitz-Zehlendorf</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--CSS Stylesheets-->
+<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+<link rel="stylesheet"href="normalized.css">
+<link rel= "stylesheet" href="skeleton.css">
+<!--Leaflet Styleheet to embed the map-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+</head>
+<body>
+
+<!-- creating a DIV container for title and corresponding description-->
+  <div class="container" >
+    <div class ="row">
+      <div class = "column" style="margin-top: 5%; text-align:center;">
+        <h1> Sprachbarrieren im Gesundheitssektor </h1>
+        <h4> Bewertung des mehrsprachigen Angebotes im Berliner Bezirk Steglitz-Zehlendorf </h4>
+      </div>
+    </div>
+  </div>
+
+<!--Div-Container including the text: structured in 2 columns -->
+<div class="container" >
+  <div class ="row">
+      <div class = "one-half column" style="margin-top: 5%; padding :30px">
+     <h5> <i> Verstehst du mich ? </i> </h5>
+        <p> Gesundheit ist wichtig und betrifft uns alle. Nicht ohne Grund ist das Recht auf medizinische Versorgung ein Grundrecht in unserer Verfassung.
+          Doch was wenn du den Arzt vor dir nicht verstehst? Wenn du deine Schmerzen oder Probleme nicht artikulieren kannst? <br>
+          Sprachbarrieren gehören zu jeder Gesellschaft. Während sie auf der Straße mit Mimik und Gesten überwunden werden können,
+          stellt sich dies in der Arztpraxis oder im Krankenhaus weitaus schwieriger dar. Erschwerte Kommunikation kann im Notfall Leben kosten. <br>
+          Studien haben herausgefunden, dass präventive und rehabilitative Untersuchungen und medizinische Angebote für chronische Krankheiten
+          weitaus weniger von Menschen angenommen werden, dessen Muttersprache nicht deutsch ist. Auch die Bereitschaft bei nicht akuten Problemen zum Arzt zu gehen,
+          sinkt mit fehlenden Deutschkenntnissen (RKI 2015).</p>
+      </div>
+          <div class = "one-half column" style="margin-top: 5%; padding: 30px">
+              <h5> <i> Was wollt ihr von mir? </i> </h5>
+              <p> Mit diesem Projekt wollen wir ein Mal über das Nicht-Sprechen sprechen.
+                Wir wollen Betroffene und Interessierte darüber informieren, wie die gesundheitliche Versorgung für Menschen mit Sprachbarrieren im Moment in Berlin aussieht.
+                Wir wollen das aneinander Vorbeisprechen verhindern und aufzeigen wo mehrsprachige Krankenhäuser und Ärzte fehlen oder wo sie zu viel sind. Wir wollen die Fragezeichen verschwinden lassen und eine Orientierungshilfe sein.
+                Wir wollen dafür sorgen, dass Gesundheit und Lebensqualität nicht bereits an der Kommunikation scheitert.
+                Da Migration und Sprache das Meinungsbild der deutschen Gesellschaft und Politik spaltet, wollen wir hier jedoch nicht weiter auf Ursachen eingehen, sondern hauptsächlich die vorhanden Symptomatik lindern. </p>
+          </div>
+      </div>
+</div>
+
+<!--Div- Container including column and text-->
+<div class = "container">
+  <div class = "row" style= "padding: 30px">
+      <h5> <i> Jetzt bist du dran! </i> </h5>
+      <p> Die unten stehende Karte zeigt dir die Lage der Krankenhäuser des Bezirkes Berlin Steglitz-Zehlendorf.
+      Wir haben die Krankenhäuser in Berlin nach ihrer Mehrsprachichkeit bewertet.
+      Je nachdem, ob die Kriterien vom Krankenhaus erfüllt wurden, wurden unterschiedlich viele Punkte vergeben.
+      Insgesamt können 10 Punkte erreicht werden. <br>
+      <p> </p>
+      <!--listing the different categories-->
+      <ul>
+      <li><b> 1 Punkt:</b> Mehrsprachiges Orientierungssystem </li>
+      <li><b> 2 Punkte:</b> Mehrsprachiges Informationsmaterial </li>
+      <li><b> 3 Punkte:</b> Dolmetscherangebot  </li>
+      <li><b> 4 Punkte:</b> Mehrsprachiges Personal </li>
+      </ul>
+        </p>
+        <p> </p>
+        <p> Die Karte ist interaktiv! Klicke auf den Button in der rechten oberen Ecke und lass dir die Krankenhäuser nach ihrer Bewertung anzeigen!
+          <br> Mit einem Klick auf die Marker kannst du dir noch mehr Informationen zu den einzelnen Krankenhäusern und ihrer Ausstattung anzeigen lassen. </p>
+  </div>
+</div>
+
+<!--Code to embed the map-->
+<center> <div id="map" style="margin-bottom: 5%; width: 900px; height: 500px";> </div> </center>
+
+<!--Code for the navigation area; embedding Kontakt.html to the website-->
+<center><ul id="navibereich" style= "margin: 5%;">
+  <li id="navi02"><a href="Kontakt.html">Kontakt</a></li>
+</ul> </center>
+
+<!--Javascript -->
+<script>
+let coordinates = [	52.453096,13.331171]; // <- coordinates of the map center
+let tile_url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';// <- URL of the OSM-map
+let map = L.map('map').setView(coordinates, 11);// <- dertermining the section through coordinates; defining the zoom
+
+L.tileLayer(tile_url, {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende'
+}).addTo(map); // <- adding source
+
+//<- defining markers and Pop-ups
+
+var
+P1 = L.marker([52.43201, 13.21918])
+.bindPopup("<b>Diagnostikum – Evgl. Krankenhaus Hubertus </b><br><b> Adresse:</b> Spanische Allee 16 <br> <b> Fremdsprachiges Personal:</b>Nein <br> <b> Mehrsprachiges Informationsmaterial: </b> Nein <br><b>Dolmetscherangebot:</b>Nein<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 0"),
+P2 = L.marker([52.4300862,13.2212642])
+.bindPopup("<b>Evangelisches Krankenhaus Hubertus </b> <b>Adresse:</b> Spanische Allee 10<br><b>Fremdsprachiges Personal:</b> Ja<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Nein<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 4"),
+P3 = L.marker([52.42316735,13.253982080425217])
+.bindPopup("<b> Hellos Klinikum Emil von Behring</b> <br><b>Adresse:</b> Walterhoeferstr. 11<br><b>Fremdsprachiges Personal:</b> Ja<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Ja<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 7"),
+P4 = L.marker([52.42252535,13.205380112094188])
+.bindPopup("<b> Kliniken im Theodor-Wenzel </b> <br><b>Adresse:</b>Potsdamer Chaussee 69<br><b>Fremdsprachiges Personal:</b> Nein<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Ja<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b>3"),
+P5 = L.marker([52.43241535,13.326632296857095])
+.bindPopup("<b>Krankenhaus Bethel Berlin </b> <br><b>Adresse:</b>Promenadenstr. 3-5<br><b>Fremdsprachiges Personal:</b> Ja<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Ja<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 7"),
+P6 = L.marker([52.4245967,13.349080424261734])
+.bindPopup("<b>St. Marien Krankenhaus </b> <br> <b>Adresse:</b>Gallwitzallee 123-143<br><b>Fremdsprachiges Personal:</b> Ja<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Ja<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 7")
+P7 = L.marker([52.4351631,13.3656047])
+.bindPopup("<b>Tagesklinik Lankwitz </b> <br> <b>Adresse:</b>Kamenzer Damm 1 E<br><b>Fremdsprachiges Personal:</b> Nein<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Nein<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 0"),
+P8 = L.marker([52.422257349999995,13.205373280217199])
+.bindPopup("<b>Tagesklinik Nikolassee </b> <br> <b>Adresse:</b>Quantzstr. 4A<br><b>Fremdsprachiges Personal:</b> Nein<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Nein<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 0"),
+P9 = L.marker([52.44222635,13.321197832134576])
+.bindPopup("<b>Universitaetsklinikum Benjamin Franklin </b> <br><b>Adresse:</b>Hindenburgdamm 30<br><b>Fremdsprachiges Personal:</b> Nein<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Nein<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 0"),
+P10 = L.marker([52.4617349,13.3022254])
+.bindPopup("<b>Westklinik Dahlem</b> <br><b>Adresse:</b>Schweinfurthstr. 43-47<br><b>Fremdsprachiges Personal:</b> Ja<br><b>Mehrsprachiges Informationsmaterial:</b> Nein<br><b>Dolmetscherangebot:</b> Nein<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 4"),
+P11 = L.marker([52.43052615,13.217677918283583])
+.bindPopup("<b>Klinik für MIC</b><br><b>Adresse:</b>Kurstr. 11<br><b>Fremdsprachiges Personal:</b> Ja<br><b>Mehrsprachiges Informationsmaterial:</b> Ja<br><b>Dolmetscherangebot:</b> Ja<br><b>Mehrsprachiges Orientierungssystem:</b> Nein<br><b>Bewertung:</b> 9");
+
+//<- defining groups with the same evaluation
+var sehr_gut = L.layerGroup([P11]);
+var gut = L.layerGroup([P5, P6, P3]);
+var mittel = L.layerGroup([P2, P10, P4]);
+var schlecht= L.layerGroup([]);
+var sehr_schlecht = L.layerGroup([P1, P7, P8, P9]);
+var alle = L.layerGroup([P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11]);
+
+//<- defnining the names of the groups for the legend
+var overlayMaps = {
+    "sehr gut": sehr_gut,
+    "gut" : gut,
+    "mittel": mittel,
+    "schlecht":schlecht,
+    "sehr schlecht": sehr_schlecht,
+    "alle" : alle
+
+
+};
+//<- adding interactive legend
+L.control.layers(overlayMaps).addTo(map);
+
+//<- adding highlighted circle
+var circle = L.circle([52.439542,13.283595], {
+    color: 'black',
+    fillColor: 'white',
+    fillOpacity: 0.5,
+    radius: 7000
+}).addTo(map);
+
+
+</script>
+
+
+</body>
+
+</html>
